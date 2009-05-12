@@ -686,6 +686,7 @@ class GameWindow < Gosu::Window
   
 end
 
+Dir.chdir 'assets'
 game_window = GameWindow.new
 if ARGV[0] == '--profile'
   require 'ruby-prof'
