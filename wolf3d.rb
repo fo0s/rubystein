@@ -111,7 +111,7 @@ class GameWindow < Gosu::Window
       
       row, col = Map.matrixify(@player.y, @player.x)
       if @last_row != row || @last_col != col
-        puts "#{col},#{row}"
+        #puts "#{col},#{row}"
         @last_row = row
         @last_col = col
       end

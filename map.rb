@@ -223,7 +223,7 @@ class Map
         texture[:south][(x - @doors[row][column].pos) % TEX_WIDTH]
       else
         if texture_id == 0
-          puts "#{type} -- #{x} -- #{y} -- #{angle}"
+          #puts "#{type} -- #{x} -- #{y} -- #{angle}"
           return @textures[-1][:south][x % TEX_WIDTH]
         end
         texture[:south][x % TEX_WIDTH]
@@ -233,7 +233,7 @@ class Map
         texture[:north][(x - @doors[row][column].pos) % TEX_WIDTH]
       else
         if texture_id == 0
-          puts "North: #{type} -- #{x} -- #{y} -- #{angle}"
+          #puts "North: #{type} -- #{x} -- #{y} -- #{angle}"
           return @textures[-1][:north][x % TEX_WIDTH]
         end
         
@@ -244,7 +244,7 @@ class Map
         texture[:west][(y - @doors[row][column].pos) % TEX_HEIGHT]
       else
         if texture_id == 0
-          puts "North: #{type} -- #{x} -- #{y} -- #{angle}"
+          #puts "North: #{type} -- #{x} -- #{y} -- #{angle}"
           return @textures[-1][:north][y % TEX_WIDTH]
         end
         
@@ -255,7 +255,7 @@ class Map
         texture[:east][(y - @doors[row][column].pos) % TEX_HEIGHT]
       else
         if texture_id == 0
-          puts "East: #{type} -- #{x} -- #{y} -- #{angle}"
+          #puts "East: #{type} -- #{x} -- #{y} -- #{angle}"
           return @textures[-1][:east][y % TEX_WIDTH]
         end
         
