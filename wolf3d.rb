@@ -451,7 +451,7 @@ class GameWindow < Gosu::Window
     @floor_ceil.draw(0, 0, ZOrder::BACKGROUND)
     
     # Raytracing logics
-    ray_angle         = (360 + @player.angle + (Player::FOV / 2)) % 360
+    ray_angle         = (@player.angle + (Player::FOV / 2)) % 360
     ray_angle_delta   = Player::RAY_ANGLE_DELTA
     
     slice = 0
