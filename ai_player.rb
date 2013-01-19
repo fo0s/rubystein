@@ -9,6 +9,27 @@ module AStar
   def find_path(map, start, goal)
     start  = Coordinate.new(start[0], start[1])
     goal   = Coordinate.new(goal[0], goal[1])
+    path = nil
+
+    dy = (goal.y.to_f - start.y)/100
+    dx = (goal.x.to_f - start.x)/100
+
+    x = start.x
+    y = start.y
+
+    100.times do
+      return false unless map.walkable?(y.to_i,x.to_i)
+      x += dx
+      y += dy
+      if x.to_i != start.x.to_i or y.to_i != start.y.to_i
+        path ||= Coordinate.new(x.to_i, y.to_i)
+      end
+    end
+
+    return path
+
+
+
     
     closed = []
     open   = [start]
