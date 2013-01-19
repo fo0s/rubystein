@@ -166,18 +166,8 @@ class AIPlayer
       @firing_left = 1 + rand(5)
     end
     
-    #dx = player.x - @x
-    #dy = (player.y - @y) * -1
-    
-    #angle_rad = Math::atan2(dy, dx)
-    #dx = @steps_removed_from_player * @step_size * Math::cos(angle_rad)
-    #dy = @steps_removed_from_player * @step_size * Math::sin(angle_rad)
-    
-    dx = 0
-    dy = 0
-    
     start = Coordinate.new(*Map.matrixify(@x, @y))
-    goal  = Coordinate.new(*Map.matrixify(player.x - dx, player.y - dy))
+    goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
     if heuristic_estimate_of_distance(start, goal) > @min_distance
       path  = self.find_path(@map, start, goal)
       if path
