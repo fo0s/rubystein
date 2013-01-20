@@ -50,4 +50,14 @@ class Door
       self.close!
     end
   end
+
+  def obstructed?(map, player)
+    row, column = Map.matrixify(player.y, player.x)
+    return true if map.doors[row][column] == self
+    map.players.each do |p|
+      row, column = Map.matrixify(p.y, p.x)
+      return true if map.doors[row][column] == self
+    end
+    false
+  end
 end

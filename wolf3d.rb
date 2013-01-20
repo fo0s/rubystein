@@ -341,7 +341,7 @@ class GameWindow < Gosu::Window
           door_close_sound_volume = (Door::FULL_VOLUME_WITHIN_GRID_BLOCKS * Door::FULL_VOLUME_WITHIN_GRID_BLOCKS) / r_2
           door_close_sound_volume = 1.0 if door_close_sound_volume > 1.0
 
-          if door.open? && @map.doors[row][column] != door && (current_time - door.opened_at) >= Door::STAYS_SECONDS_OPEN
+          if door.open? && !door.obstructed?(@map, @player) && (current_time - door.opened_at) >= Door::STAYS_SECONDS_OPEN
             @door_close_sound.play(door_close_sound_volume) if door_close_sound_volume > 0
             door.close!
           end
