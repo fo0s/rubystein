@@ -50,13 +50,4 @@ class Door
       self.close!
     end
   end
-  
-  def inspect
-    if open?
-      "#<Door:#{object_id} open>"
-    else
-      "#<Door:#{object_id} open>"
-    end
-  end
-  
 end
