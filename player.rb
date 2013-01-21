@@ -6,8 +6,8 @@ class Player
   ANGLE_SPEED = 6
   FOV = 60.0 # Field of View
   HALF_FOV = FOV / 2
-  DISTANCE_TO_PROJECTION = (Config::WINDOW_WIDTH / 2) / Math.tan((FOV / 2) * Math::PI / 180)
-  RAY_ANGLE_DELTA = (FOV / Config::WINDOW_WIDTH)
+  DISTANCE_TO_PROJECTION = (RbConfig::WINDOW_WIDTH / 2) / Math.tan((FOV / 2) * Math::PI / 180)
+  RAY_ANGLE_DELTA = (FOV / RbConfig::WINDOW_WIDTH)
   
   
   attr_accessor :x

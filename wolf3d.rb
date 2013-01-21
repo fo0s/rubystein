@@ -48,11 +48,11 @@ class GameWindow < Gosu::Window
   
   TOP  = 0
   LEFT = 0
-  RIGHT = Config::WINDOW_WIDTH - 1
-  BOTTOM = Config::WINDOW_HEIGHT - 1
+  RIGHT = RbConfig::WINDOW_WIDTH - 1
+  BOTTOM = RbConfig::WINDOW_HEIGHT - 1
   
   def initialize
-    super(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT, Config::FULLSCREEN, 1000.0 / Config::FPS)
+    super(RbConfig::WINDOW_WIDTH, RbConfig::WINDOW_HEIGHT, RbConfig::FULLSCREEN, 1000.0 / RbConfig::FPS)
     self.caption = 'Rubystein 3d by Phusion CS Company'
     
     @map = MapPool.get(self, 0)
@@ -63,8 +63,8 @@ class GameWindow < Gosu::Window
     @player.y = @map.player_y_init
     @player.angle = @map.player_angle_init
     
-    @wall_perp_distances   = [0]   #* Config::WINDOW_WIDTH
-    @drawn_sprite_x        = [nil] #* Config::WINDOW_WIDTH
+    @wall_perp_distances   = [0]   #* RbConfig::WINDOW_WIDTH
+    @drawn_sprite_x        = [nil] #* RbConfig::WINDOW_WIDTH
     
     @hud = Gosu::Image::new(self, 'hud.png', true)
     @hud_numbers = SpritePool.get(self, 'numbers.png', 32, 16)
@@ -284,8 +284,8 @@ class GameWindow < Gosu::Window
     end
     
     if !@map.players.empty?
-      if @map.players.size > Config::AI_INVOCATIONS_PER_LOOP
-        max_num_invoked = Config::AI_INVOCATIONS_PER_LOOP
+      if @map.players.size > RbConfig::AI_INVOCATIONS_PER_LOOP
+        max_num_invoked = RbConfig::AI_INVOCATIONS_PER_LOOP
       else
         max_num_invoked = @map.players.size
       end
@@ -373,7 +373,7 @@ class GameWindow < Gosu::Window
         return
       end
       
-      sprite_in_crosshair = @drawn_sprite_x[Config::WINDOW_WIDTH/2]
+      sprite_in_crosshair = @drawn_sprite_x[RbConfig::WINDOW_WIDTH/2]
       
       if sprite_in_crosshair && sprite_in_crosshair.respond_to?(:take_damage_from) && sprite_in_crosshair.respond_to?(:dead?) && !sprite_in_crosshair.dead?
         sprite_in_crosshair.take_damage_from(@player)
@@ -413,10 +413,10 @@ class GameWindow < Gosu::Window
       sprite_pixel_factor = ( Player::DISTANCE_TO_PROJECTION / perp_distance )
       sprite_size = sprite_pixel_factor * Sprite::TEX_WIDTH
       
-      x = ( Math.tan(sprite_angle * Math::PI / 180) * Player::DISTANCE_TO_PROJECTION + (Config::WINDOW_WIDTH - sprite_size) / 2).to_i
-      next if x + sprite_size.to_i < 0 or x >= Config::WINDOW_WIDTH # Out of our screen resolution
+      x = ( Math.tan(sprite_angle * Math::PI / 180) * Player::DISTANCE_TO_PROJECTION + (RbConfig::WINDOW_WIDTH - sprite_size) / 2).to_i
+      next if x + sprite_size.to_i < 0 or x >= RbConfig::WINDOW_WIDTH # Out of our screen resolution
 
-      y = (Config::WINDOW_HEIGHT - sprite_size) / 2
+      y = (RbConfig::WINDOW_HEIGHT - sprite_size) / 2
       
       i = 0
       slices = sprite.slices
@@ -425,7 +425,7 @@ class GameWindow < Gosu::Window
         slice = x + i * sprite_pixel_factor
         slice_idx = slice.to_i
         
-        if slice >= 0 && slice < Config::WINDOW_WIDTH && perp_distance < @wall_perp_distances[slice_idx]
+        if slice >= 0 && slice < RbConfig::WINDOW_WIDTH && perp_distance < @wall_perp_distances[slice_idx]
           slices[i].draw(slice, y, sprite.z_order, sprite_pixel_factor, sprite_pixel_factor, 0xffffffff)
           drawn_slice_idx = slice_idx
           
@@ -457,7 +457,7 @@ class GameWindow < Gosu::Window
     ray_angle_delta   = Player::RAY_ANGLE_DELTA
     
     slice = 0
-    while slice < Config::WINDOW_WIDTH
+    while slice < RbConfig::WINDOW_WIDTH
     
       type, distance, map_x, map_y = @map.find_nearest_intersection(@player.x, @player.y, ray_angle)
       
@@ -467,10 +467,10 @@ class GameWindow < Gosu::Window
       corrected_distance = distance * Math::cos(corrected_angle * Math::PI / 180)
       
       slice_height = ((Map::TEX_HEIGHT / corrected_distance) * Player::DISTANCE_TO_PROJECTION)
-      slice_y = (Config::WINDOW_HEIGHT - slice_height) * (1 - @player.height)
+      slice_y = (RbConfig::WINDOW_HEIGHT - slice_height) * (1 - @player.height)
             
       n = 0
-      while n < Config::SUB_DIVISION && (slice + n) < Config::WINDOW_WIDTH
+      while n < RbConfig::SUB_DIVISION && (slice + n) < RbConfig::WINDOW_WIDTH
         @wall_perp_distances[slice + n] = corrected_distance
         texture = @map.texture_for(type, map_x, map_y, ray_angle)
         texture.draw(slice + n, slice_y, ZOrder::LEVEL, 1, slice_height / Map::TEX_HEIGHT) if texture

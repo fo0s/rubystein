@@ -1,4 +1,4 @@
-module Config
+module RbConfig
   WINDOW_WIDTH  = 640
   WINDOW_HEIGHT = 480
   FULLSCREEN    = false

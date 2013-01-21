@@ -140,7 +140,7 @@ class Map
     #  [Infinity, Infinity]
     #end
     
-    #if(ax < 0 || ax >= Config::WINDOW_WIDTH || ay < 0 || ay >= Config::WINDOW_HEIGHT)
+    #if(ax < 0 || ax >= RbConfig::WINDOW_WIDTH || ay < 0 || ay >= RbConfig::WINDOW_HEIGHT)
     #  [Infinity, Infinity]
     #end
     
@@ -182,7 +182,7 @@ class Map
       by = start_y + (start_x - bx) * Math.tan(angle * Math::PI / 180)
     
       # If the casted ray gets out of the playfield, emit infinity.
-      #if(bx < 0 || bx >= Config::WINDOW_WIDTH || by < 0 || by >= Config::WINDOW_HEIGHT)
+      #if(bx < 0 || bx >= RbConfig::WINDOW_WIDTH || by < 0 || by >= RbConfig::WINDOW_HEIGHT)
       #  [Infinity, Infinity]
       #else
       
