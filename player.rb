@@ -52,6 +52,14 @@ class Player
     # y = r sin(theta)
     STEP_SIZE * Math.sin(self.angle_in_radians)
   end
+
+  def dx_left
+    STEP_SIZE * Math.cos(self.angle_in_radians + Math::PI/2)
+  end
+
+  def dy_left
+    STEP_SIZE * Math.sin(self.angle_in_radians + Math::PI/2)
+  end
   
   def can_move_forward?(map)
     return !map.hit?(@x + 4*dx, @y - 4*dy)
@@ -59,6 +67,14 @@ class Player
   
   def can_move_backward?(map)
     return !map.hit?(@x - 4*dx, @y + 4*dy)
+  end
+
+  def can_move_left?(map)
+    return !map.hit?(@x + 4*dx_left, @y - 4*dy_left)
+  end
+
+  def can_move_right?(map)
+    return !map.hit?(@x - 4*dx_left, @y + 4*dy_left)
   end
   
   def move_forward
@@ -71,6 +87,16 @@ class Player
     @y += dy
   end
   
+  def move_left
+    @x += dx_left
+    @y -= dy_left
+  end
+
+  def move_right
+    @x -= dx_left
+    @y += dy_left
+  end
+
   def health_percent
     @health * 100.0 / @max_health
   end

@@ -1,6 +1,6 @@
 TODO:
 set resolution and configure shit
-strafing
+x strafing
 enemy AI
 enemies from yaml
 map generation

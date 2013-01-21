@@ -355,6 +355,8 @@ class GameWindow < Gosu::Window
     @player.turn_right if button_down? Gosu::Button::KbRight
     @player.move_forward  if button_down? Gosu::Button::KbUp and @player.can_move_forward?(@map)
     @player.move_backward if button_down? Gosu::Button::KbDown and @player.can_move_backward?(@map)
+    @player.move_left if button_down? Gosu::Button::KbV and @player.can_move_left?(@map)
+    @player.move_right if button_down? Gosu::Button::KbB and @player.can_move_right?(@map)
     
     if button_down? Gosu::Button::KbSpace
       column, row = Map.matrixify(@player.x, @player.y)
