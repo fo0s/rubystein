@@ -387,6 +387,7 @@ class GameWindow < Gosu::Window
   
   def button_down(id)
     if id == Gosu::Button::KbEscape
+      @bg_song.stop if @bg_song
       close
     end
   end
