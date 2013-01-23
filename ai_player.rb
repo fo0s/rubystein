@@ -171,7 +171,6 @@ class Enemy < AIPlayer
     @firing_sounds = load_sounds(firing_sound)
     @death_sounds  = load_sounds(death_sound)
     @name       ||= self.class.to_s
-    @attacks = []
     #@firing_text  = "#{@name}: \"#{SOUND_TO_TEXT[firing_sound]}\"" if SOUND_TO_TEXT.has_key?(firing_sound)
     #@death_text   = "#{@name}: \"#{SOUND_TO_TEXT[death_sound]}\"" if SOUND_TO_TEXT.has_key?(death_sound)
 
@@ -328,21 +327,6 @@ class Enemy < AIPlayer
     text = SOUND_TO_TEXT[sound[:file]]
     @window.show_text("#{@name}: \"#{text}\"") if text
     sound[:sound].play
-  end
-end
-
-class Attack
-  def self.eligible(attacker, target)
-    false
-  end
-
-  def self.attack(attacker)
-  end
-end
-
-class InstantRange < Attack
-  def self.eligible(attacker, target)
-
   end
 end
 
