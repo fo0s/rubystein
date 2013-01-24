@@ -16,9 +16,10 @@ require 'image_pool'
 require 'level'
 
 module ZOrder
-  BACKGROUND = 0
-  LEVEL      = 1
-  SPRITES    = 2
+  CEIL = 0
+  FLOOR = 1
+  LEVEL      = 2
+  SPRITES    = 3
   WEAPON     = 9999
   HUD        = 10000
   SCREEN_FLASH    = HUD + 3
@@ -70,7 +71,8 @@ class GameWindow < Gosu::Window
     @hud_numbers = SpritePool.get(self, 'numbers.png', 32, 16)
     @weapon_idle = Gosu::Image::new(self, 'hand1.bmp', true)
     @weapon_fire = Gosu::Image::new(self, 'hand2.bmp', true)
-    @floor_ceil  = Gosu::Image::new(self, 'floor_ceil.png', true)
+    @floor  = Gosu::Image::new(self, 'floor.png', true)
+    @ceil  = Gosu::Image::new(self, 'ceil.png', true)
     self.background_song = nil  # Play default background song.
     @fire_sound = Gosu::Sample.new(self, 'fire.ogg')
     @door_open_sound = Gosu::Sample.new(self, 'dooropen.ogg')
@@ -404,7 +406,7 @@ class GameWindow < Gosu::Window
   def draw_sprites
     @drawn_sprite_x.clear
     #@sprite_in_crosshair = nil
-    
+
     @map.sprites.each { |sprite|
       dx = (sprite.x - @player.x)
       # Correct the angle by mirroring it in x. This is necessary seeing as our grid system increases in y when we "go down"
@@ -426,7 +428,7 @@ class GameWindow < Gosu::Window
       x = ( Math.tan(sprite_angle * Math::PI / 180) * Player::DISTANCE_TO_PROJECTION + (RbConfig::WINDOW_WIDTH - sprite_size) / 2).to_i
       next if x + sprite_size.to_i < 0 or x >= RbConfig::WINDOW_WIDTH # Out of our screen resolution
 
-      y = (RbConfig::WINDOW_HEIGHT - sprite_size) / 2
+      y = (RbConfig::WINDOW_HEIGHT - sprite_size) * (1-@player.height)
       
       i = 0
       slices = sprite.slices
@@ -460,8 +462,9 @@ class GameWindow < Gosu::Window
   end
 
   def draw_scene
-    @floor_ceil.draw(0, 0, ZOrder::BACKGROUND)
-    
+    @ceil.draw(0, 0, ZOrder::CEIL)
+    @floor.draw(0, (1-@player.height)*RbConfig::WINDOW_HEIGHT, ZOrder::FLOOR)
+
     # Raytracing logics
     ray_angle         = (@player.angle + (Player::FOV / 2)) % 360
     ray_angle_delta   = Player::RAY_ANGLE_DELTA
