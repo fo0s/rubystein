@@ -19,6 +19,7 @@ class Player
   attr_accessor :window
   attr_accessor :score
   attr_accessor :max_health
+  attr_accessor :running
   
   def initialize(window)
     @x = 0.0
@@ -28,37 +29,46 @@ class Player
     @window = window
     @score  = 0
     @max_health = 100
+    @running = false
   end
   
   def angle_in_radians
     @angle * Math::PI / 180
   end
+
+  def angle_speed
+    self.running ? ANGLE_SPEED * 1.5 : ANGLE_SPEED
+  end
   
   def turn_left
-    @angle = (@angle + ANGLE_SPEED) % 360
+    @angle = (@angle + angle_speed) % 360
   end
   
   def turn_right
     # The added 360 here will make sure that @angle >= 0
-    @angle = (360 + @angle - ANGLE_SPEED) % 360
+    @angle = (@angle - angle_speed) % 360
+  end
+
+  def step_size
+    self.running ? STEP_SIZE * 1.5 : STEP_SIZE
   end
   
   def dx
     # x = r cos(theta)
-    STEP_SIZE * Math.cos(self.angle_in_radians)
+    step_size * Math.cos(self.angle_in_radians)
   end
   
   def dy
     # y = r sin(theta)
-    STEP_SIZE * Math.sin(self.angle_in_radians)
+    step_size * Math.sin(self.angle_in_radians)
   end
 
   def dx_left
-    STEP_SIZE * Math.cos(self.angle_in_radians + Math::PI/2)
+    step_size * Math.cos(self.angle_in_radians + Math::PI/2)
   end
 
   def dy_left
-    STEP_SIZE * Math.sin(self.angle_in_radians + Math::PI/2)
+    step_size * Math.sin(self.angle_in_radians + Math::PI/2)
   end
   
   def can_move_forward?(map)

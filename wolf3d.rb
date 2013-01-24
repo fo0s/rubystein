@@ -229,7 +229,7 @@ class GameWindow < Gosu::Window
   def update_boss_presentation_progress
     args = @presenting_boss
     
-    if button_down?(Gosu::Button::KbSpace)
+    if button_down?(Gosu::KbSpace)
       args[:state] = :done
       args[:start_time] = Time.now
       args[:duration] = 0
@@ -351,14 +351,14 @@ class GameWindow < Gosu::Window
   end
 
   def process_movement_input
-    @player.turn_left  if button_down? Gosu::Button::KbLeft
-    @player.turn_right if button_down? Gosu::Button::KbRight
-    @player.move_forward  if button_down? Gosu::Button::KbUp and @player.can_move_forward?(@map)
-    @player.move_backward if button_down? Gosu::Button::KbDown and @player.can_move_backward?(@map)
-    @player.move_left if button_down? Gosu::Button::KbV and @player.can_move_left?(@map)
-    @player.move_right if button_down? Gosu::Button::KbB and @player.can_move_right?(@map)
+    @player.turn_left  if button_down? Gosu::KbLeft
+    @player.turn_right if button_down? Gosu::KbRight
+    @player.move_forward  if button_down? Gosu::KbUp and @player.can_move_forward?(@map)
+    @player.move_backward if button_down? Gosu::KbDown and @player.can_move_backward?(@map)
+    @player.move_left if button_down? Gosu::KbV and @player.can_move_left?(@map)
+    @player.move_right if button_down? Gosu::KbB and @player.can_move_right?(@map)
     
-    if button_down? Gosu::Button::KbSpace
+    if button_down? Gosu::KbSpace
       column, row = Map.matrixify(@player.x, @player.y)
       door = @map.get_door(row, column, @player.angle)
       
@@ -386,9 +386,18 @@ class GameWindow < Gosu::Window
   end
   
   def button_down(id)
-    if id == Gosu::Button::KbEscape
+    if id == Gosu::KbEscape
       @bg_song.stop if @bg_song
       close
+    end
+    if id == Gosu::KbLeftShift
+      @player.running = true
+    end
+  end
+
+  def button_up(id)
+    if id == Gosu::KbLeftShift
+      @player.running = false
     end
   end
 
@@ -524,9 +533,9 @@ class GameWindow < Gosu::Window
   end
 
   def draw_weapon
-    if button_down? Gosu::Button::KbUp
+    if button_down? Gosu::KbUp
       dy = Math.cos(Time.now.to_f * -10) * 7
-    elsif button_down? Gosu::Button::KbDown
+    elsif button_down? Gosu::KbDown
       dy = Math.cos(Time.now.to_f * 10) * 7
     else
       dy = Math.cos(Time.now.to_f * 5) * 3

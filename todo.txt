@@ -1,8 +1,8 @@
 TODO:
 set resolution and configure shit
 x strafing
+x running
 enemy AI
-enemies from yaml
 map generation
 more weapons
 projectile weapons
