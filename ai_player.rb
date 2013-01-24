@@ -113,8 +113,6 @@ class AIPlayer
   # Whether the AI for this sprite is active.
   attr_accessor :active
 
-  attr_accessor :steps_removed_from_player
-
   def initialize(sight = 10, min_distance = 2)
     @sight = sight
     @min_distance = min_distance
@@ -165,7 +163,6 @@ class Enemy < AIPlayer
     @slices = {}
     @health ||= 100
     @map = map
-    @steps_removed_from_player = 22
     @firing_left = 0
     @kill_score  = kill_score
     @firing_sounds = load_sounds(firing_sound)
