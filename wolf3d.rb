@@ -59,7 +59,6 @@ class GameWindow < Gosu::Window
     @map = MapPool.get(self, 0)
     
     @player = Player.new(self)
-    @player.height = 0.5
     @player.x = @map.player_x_init
     @player.y = @map.player_y_init
     @player.angle = @map.player_angle_init
@@ -124,8 +123,29 @@ class GameWindow < Gosu::Window
     else
       abort "Invalid mode '#{@mode}'"
     end
+    if @player.jumping
+      @player.height = @player.height + (1-@player.height)/5 if @player.jumping == :up
+      @player.height = @player.height - (1-@player.height)/5 if @player.jumping == :down
+      @player.jumping = :down if @player.jumping == :up and @player.height > 0.8
+      if @player.jumping == :down and @player.height <= 0.5
+        @player.jumping = false
+        @player.height = 0.5
+      end
+    end
+    if @player.crouching
+      @player.height = @player.height - 0.08 if @player.crouching == :down
+      @player.height = @player.height + 0.08 if @player.crouching == :up
+      if @player.crouching == :down and @player.height <= 0.3
+        @player.height = 0.3
+        @player.crouching = true
+      end
+      if @player.crouching == :up and @player.height >= 0.5
+        @player.height = 0.5
+        @player.crouching = false
+      end
+    end
   end
-  
+
   def draw
     case @mode
     when :normal, :fading_out
@@ -359,7 +379,16 @@ class GameWindow < Gosu::Window
     @player.move_backward if button_down? Gosu::KbDown and @player.can_move_backward?(@map)
     @player.move_left if button_down? Gosu::KbV and @player.can_move_left?(@map)
     @player.move_right if button_down? Gosu::KbB and @player.can_move_right?(@map)
-    
+    @player.height = @player.height
+    if button_down? Gosu::KbC and @player.jumping == false
+      @player.jumping = :up
+      @player.crouching = false
+    end
+    if button_down? Gosu::KbX and @player.jumping == false
+      @player.crouching = :down if @player.crouching == false or @player.crouching == nil
+      @player.crouching = :up if @player.crouching == true
+    end
+
     if button_down? Gosu::KbSpace
       column, row = Map.matrixify(@player.x, @player.y)
       door = @map.get_door(row, column, @player.angle)

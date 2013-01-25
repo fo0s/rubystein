@@ -20,6 +20,8 @@ class Player
   attr_accessor :score
   attr_accessor :max_health
   attr_accessor :running
+  attr_accessor :crouching
+  attr_accessor :jumping
   
   def initialize(window)
     @x = 0.0
@@ -30,6 +32,9 @@ class Player
     @score  = 0
     @max_health = 100
     @running = false
+    @crouched = false
+    @jumping = false
+    @height = 0.5
   end
   
   def angle_in_radians
@@ -50,6 +55,7 @@ class Player
   end
 
   def step_size
+    return STEP_SIZE * 0.5 if self.crouching
     self.running ? STEP_SIZE * 1.5 : STEP_SIZE
   end
   
