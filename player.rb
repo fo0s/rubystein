@@ -22,6 +22,7 @@ class Player
   attr_accessor :running
   attr_accessor :crouching
   attr_accessor :jumping
+  attr_accessor :weapon
   
   def initialize(window)
     @x = 0.0
@@ -35,6 +36,7 @@ class Player
     @crouched = false
     @jumping = false
     @height = 0.5
+    @weapon = PowerOfCode.new(window)
   end
 
   def update

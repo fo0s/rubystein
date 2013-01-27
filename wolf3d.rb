@@ -68,8 +68,6 @@ class GameWindow < Gosu::Window
 
     @hud = Gosu::Image::new(self, 'hud.png', true)
     @hud_numbers = SpritePool.get(self, 'numbers.png', 32, 16)
-    @weapon_idle = Gosu::Image::new(self, 'hand1.bmp', true)
-    @weapon_fire = Gosu::Image::new(self, 'hand2.bmp', true)
     @floor  = Gosu::Image::new(self, 'floor.png', true)
     @ceil  = Gosu::Image::new(self, 'ceil.png', true)
     self.background_song = nil  # Play default background song.
@@ -358,7 +356,9 @@ class GameWindow < Gosu::Window
     @player.move_backward if button_down? Gosu::KbDown and @player.can_move_backward?(@map)
     @player.move_left if button_down? Gosu::KbV and @player.can_move_left?(@map)
     @player.move_right if button_down? Gosu::KbB and @player.can_move_right?(@map)
-    @player.height = @player.height
+    @player.weapon = PowerOfCode.new(self) if button_down? Gosu::Kb1
+    @player.weapon = Pistol.new(self) if button_down? Gosu::Kb2
+    
     if button_down? Gosu::KbC and @player.jumping == false
       @player.jumping = :up
       @player.crouching = false
@@ -553,10 +553,10 @@ class GameWindow < Gosu::Window
     end
 
     if @fired_weapon
-      @weapon_fire.draw(200, 240 + dy, ZOrder::WEAPON)
+      @player.weapon.fire_sprite.draw(200, 240 + dy, ZOrder::WEAPON)
       @fire_sound.play(0.2)
     else
-      @weapon_idle.draw(200, 276 + dy, ZOrder::WEAPON)
+      @player.weapon.idle_sprite.draw(200, 276 + dy, ZOrder::WEAPON)
     end
   end
 

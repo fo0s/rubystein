@@ -187,7 +187,7 @@ class Enemy < AIPlayer
 
   def take_damage_from(player)
     return if @current_state == :dead
-    @health -= 5 # TODO: Need to refactor this to take into account different weapons.
+    @health -= player.weapon.damage
     if @health > 0
       self.current_state = :damaged
     else
