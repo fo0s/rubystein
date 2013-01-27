@@ -117,32 +117,11 @@ class GameWindow < Gosu::Window
         @last_col = col
       end
 
+      @player.update
     when :presenting_boss
       update_boss_presentation_progress
-
     else
       abort "Invalid mode '#{@mode}'"
-    end
-    if @player.jumping
-      @player.height = @player.height + (1-@player.height)/5 if @player.jumping == :up
-      @player.height = @player.height - (1-@player.height)/5 if @player.jumping == :down
-      @player.jumping = :down if @player.jumping == :up and @player.height > 0.8
-      if @player.jumping == :down and @player.height <= 0.5
-        @player.jumping = false
-        @player.height = 0.5
-      end
-    end
-    if @player.crouching
-      @player.height = @player.height - 0.08 if @player.crouching == :down
-      @player.height = @player.height + 0.08 if @player.crouching == :up
-      if @player.crouching == :down and @player.height <= 0.3
-        @player.height = 0.3
-        @player.crouching = true
-      end
-      if @player.crouching == :up and @player.height >= 0.5
-        @player.height = 0.5
-        @player.crouching = false
-      end
     end
   end
 

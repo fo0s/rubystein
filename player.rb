@@ -36,6 +36,31 @@ class Player
     @jumping = false
     @height = 0.5
   end
+
+  def update
+    if @jumping
+      @height = @height + (1-@height)/5 if @jumping == :up
+      @height = @height - (1-@height)/5 if @jumping == :down
+      @jumping = :down if @jumping == :up and @height > 0.8
+      if @jumping == :down and @height <= 0.5
+        @jumping = false
+        @height = 0.5
+      end
+    end
+    if @crouching
+      @height = @height - 0.08 if @crouching == :down
+      @height = @height + 0.08 if @crouching == :up
+      if @crouching == :down and @height <= 0.3
+        @height = 0.3
+        @crouching = true
+      end
+      if @crouching == :up and @height >= 0.5
+        @height = 0.5
+        @crouching = false
+      end
+    end
+
+  end
   
   def angle_in_radians
     @angle * Math::PI / 180
