@@ -300,8 +300,6 @@ class Enemy < AIPlayer
     f_2 = FIRING_SOUND_BLOCKS * FIRING_SOUND_BLOCKS * Map::GRID_WIDTH_HEIGHT * Map::GRID_WIDTH_HEIGHT
     r_2 = f_2 if r_2 < f_2
 
-    volume = f_2 / (r_2 * 1.25)
-
     if @firing_sound_sample.nil? || !@firing_sound_sample.playing?
       @firing_sound_sample = play_random_sound(@firing_sounds)
     end
@@ -324,6 +322,10 @@ class Enemy < AIPlayer
     text = SOUND_TO_TEXT[sound[:file]]
     @window.show_text("#{@name}: \"#{text}\"") if text
     sound[:sound].play
+  end
+
+  def clean_name
+    self.class.to_s.downcase
   end
 end
 
@@ -360,11 +362,11 @@ end
 class Guard < Enemy
   def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 100, step_size = 3, animation_interval = 0.2)
     sprites = {
-      :idle    => ['guard_idle.png'],
-      :walking => ['guard_walking.png', 'guard_walking2.png', 'guard_walking3.png', 'guard_walking4.png'],
-      :firing  => ['guard_firing.png', 'guard_firing2.png'],
-      :damaged => ['guard_damaged.png', 'guard_dead.png'],
-      :dead    => ['guard_dead.png', 'guard_dead2.png', 'guard_dead3.png', 'guard_dead4.png', 'guard_dead5.png']
+      :idle    => ["#{clean_name}_idle.png"],
+      :walking => (1..4).map{|n| "#{clean_name}_walking#{n}.png"},
+      :firing  => (1..2).map{|n| "#{clean_name}_firing#{n}.png"},
+      :damaged => (1..2).map{|n| "#{clean_name}_damaged#{n}.png"},
+      :dead    => (1..5).map{|n| "#{clean_name}_dead#{n}.png"},
     }
 
     sounds  = ['long live php.ogg', 'myphplife.ogg', 'my damn php life.ogg', 'phpforever.ogg']
