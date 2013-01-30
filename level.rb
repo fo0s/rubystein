@@ -201,7 +201,7 @@ public
     
     ####### Players #######
     
-    zed, hongli, ninh = nil
+    zed = nil
     map.add do |add|
       # Southern (starting) room.
       add.player(Guard, 40.5, 61.5)
@@ -245,11 +245,6 @@ public
       add.player(Guard, 22.5, 17.5)
       add.player(Hans, 17.5, 17.0)
       add.player(Thin, 22.5, 18.0)
-      
-      hongli = add.player(Hongli, 9.0, 19.0)
-      hongli.active = false
-      ninh = add.player(Ninh, 10.0, 17.0)
-      ninh.active = false
     end
     
     ####### Items #######
@@ -363,14 +358,6 @@ public
       add.item(Peepcode, 13.5, 15.5)
       add.item(Rails, 7.5, 15.5)
       add.item(Rails, 7.5, 19.5)
-      add.item(InvisibleInfo, 14.5, 17.5) do |item, player|
-        window.present_boss("Hongli Lai & Ninh Bui", "phusion_guys.png", "FINAL BOSSES") do
-          window.background_song = "theme_song.ogg"
-        end
-        map.items.delete(item)
-        hongli.active = true
-        ninh.active = true
-      end
     end
     
     map

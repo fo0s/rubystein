@@ -417,58 +417,6 @@ class Ronald < Enemy
   end
 end
 
-class Hongli < Enemy
-  def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 10000, step_size = 3, animation_interval = 0.2, &on_death)
-    sprites = {
-      :idle    => ['hongli.png'],
-      :walking => ['hongli.png'],
-      :firing  => ['hongli_attack.png', 'hongli_attack2.png'],
-      :damaged => ['hongli_damaged.png'],
-      :dead    => ['hongli_dead.png', 'hongli_dead2.png', 'hongli_dead3.png', 'hongli_dead4.png']
-    }
-
-    death_sound  ||= 'impossible.ogg'
-    firing_sound ||= ['i_hope_you_catch_swine_flu.ogg', 'i_will_not_be_defeated.ogg', 'your_attack_is_weak.ogg']
-
-    @name = "Hongli Lai"
-    super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
-    @health = 350
-    @on_death = on_death
-  end
-
-  private
-
-  def on_death
-    @on_death.call if @on_death
-  end
-end
-
-class Ninh < Enemy
-  def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 10000, step_size = 3, animation_interval = 0.2, &on_death)
-    sprites = {
-      :idle    => ['ninh.png'],
-      :walking => ['ninh.png'],
-      :firing  => ['ninh_attack.png'],
-      :damaged => ['ninh_damaged.png'],
-      :dead    => ['ninh_dead.png', 'ninh_dead2.png', 'ninh_dead3.png', 'ninh_dead4.png']
-    }
-
-    death_sound  ||= 'nooo.ogg'
-    firing_sound ||= ['never_gonna_give_you_up.ogg', 'ni.ogg', 'boom_headshot.ogg']
-
-    @name = "Ninh Bui"
-    super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
-    @health = 350
-    @on_death = on_death
-  end
-
-  private
-
-  def on_death
-    @on_death.call if @on_death
-  end
-end
-
 class Zed < Enemy
   def initialize(window, map, x, y, death_sound = 'omgponies.ogg', firing_sound = ['test_all_the_effing_time_is_lame.ogg', 'guitar_weapon.ogg', 'guitar_weapon2.ogg'], kill_score = 10000, step_size = 3, animation_interval = 0.2)
     sprites = {
