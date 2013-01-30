@@ -399,13 +399,11 @@ end
 class Ronald < Enemy
   def initialize(window, map, x, y, death_sound = 'balloon.ogg', firing_sound = 'floating.ogg', kill_score = 2000, step_size = 3, animation_interval = 0.2)
     sprites = {
-      :idle    => ['ronald.png'],
-      :walking => ['ronald_moving.png', 'ronald_moving2.png'],
-      :firing  => ['ronald_attack.png', 'ronald_attack2.png'],
-      :damaged => ['ronald_damaged.png'],
-      :dead    => ['ronald_dead.png', 'ronald_dead2.png', 'ronald_dead3.png', 'ronald_dead4.png',
-                   'ronald_dead5.png', 'ronald_dead6.png', 'ronald_dead7.png', 'ronald_dead8.png',
-                   'ronald_dead9.png', 'ronald_dead10.png']
+      :idle    => ["#{clean_name}_idle.png"],
+      :walking => (1..2).map{|n| "#{clean_name}_walking#{n}.png"},
+      :firing  => (1..2).map{|n| "#{clean_name}_firing#{n}.png"},
+      :damaged => ["#{clean_name}_damaged.png"],
+      :dead    => (1..10).map{|n| "#{clean_name}_dead#{n}.png"},
     }
 
     @name = "Pennywise McDonalds"
