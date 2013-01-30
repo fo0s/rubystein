@@ -206,7 +206,6 @@ public
       # Southern (starting) room.
       add.player(Guard, 40.5, 61.5)
       add.player(Dog, 37.5, 57.5)
-      add.player(Thin, 34.5, 41.5)
       
       # Room of horizontal scaling.
       add.player(Dog, 37.5, 52.5)
@@ -225,7 +224,6 @@ public
       # Eastern room.
       add.player(Guard, 49.5, 33.5)
       add.player(Hans, 47.5, 40.5)
-      add.player(Thin, 49.5, 44.5)
       add.player(Hans, 59.5, 31.5)
       
       # Path to north room.
@@ -244,7 +242,6 @@ public
       add.player(Guard, 19.5, 15.0)
       add.player(Guard, 22.5, 17.5)
       add.player(Hans, 17.5, 17.0)
-      add.player(Thin, 22.5, 18.0)
     end
     
     ####### Items #######
@@ -260,7 +257,6 @@ public
       add.item(Info, 31.5, 62.2, "Antonio Cangiano: \"Now on sale: Ruby on\nRails for Microsoft Developers\"")
       add.item(Info, 35.5, 55.5, "Peter Cooper: \"You are our last hope.\nShow the people that Rails CAN scale!\"")
       add.item(Info, 35.5, 52.5, "Room of horizontal scaling\nGoal: shutdown pack of Mongrels")
-      add.item(Info, 34.5, 51.5, "Room of vertical scaling\nStarring: Thin web server\nWarning: more powerful than a single mongrel!")
       
       # Central room with Pratik, Koz and Yoda.
       add.item(Peepcode, 37.0, 34.5)

@@ -435,26 +435,6 @@ class Zed < Enemy
   end
 end
 
-class Thin < Enemy
-  def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 500, step_size = 3, animation_interval = 0.5)
-    sprites = {
-      :idle    => ['thin.png'],
-      :walking => ['thin.png', 'thin2.png'],
-      :firing  => ['thin_attacking.png', 'thin_attacking2.png'],
-      :damaged => ['thin_damaged.png'],
-      :dead    => ['thin_dead.png', 'thin_dead2.png', 'thin_dead3.png', 'thin_dead4.png']
-    }
-
-    sounds = ['connection_broken.ogg', 'long_live_http.ogg', 'too_many_io_errors.ogg']
-    death_sound  ||= sounds
-    firing_sound ||= sounds
-
-    super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
-    @health = 200
-    @min_distance = 1
-  end
-end
-
 class Dog < MeleeEnemy
   def initialize(window, map, x, y, death_sound = 'dog_cry.ogg', firing_sound = 'dog_bark.ogg', kill_score = 500, step_size = 7, animation_interval = 0.2)
     sprites = {
