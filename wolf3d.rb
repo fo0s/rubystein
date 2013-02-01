@@ -350,25 +350,25 @@ class GameWindow < Gosu::Window
   end
 
   def process_movement_input
-    @player.turn_left  if button_down? Gosu::KbLeft
-    @player.turn_right if button_down? Gosu::KbRight
-    @player.move_forward  if button_down? Gosu::KbUp and @player.can_move_forward?(@map)
-    @player.move_backward if button_down? Gosu::KbDown and @player.can_move_backward?(@map)
-    @player.move_left if button_down? Gosu::KbV and @player.can_move_left?(@map)
-    @player.move_right if button_down? Gosu::KbB and @player.can_move_right?(@map)
-    @player.weapon = PowerOfCode.new(self) if button_down? Gosu::Kb1
-    @player.weapon = Pistol.new(self) if button_down? Gosu::Kb2
-    
-    if button_down? Gosu::KbC and @player.jumping == false
+    @player.turn_left  if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft
+    @player.turn_right if button_down? Gosu::KbRight or button_down? Gosu::GpRight
+    @player.move_forward  if (button_down? Gosu::KbUp or button_down? Gosu::GpUp) and @player.can_move_forward?(@map)
+    @player.move_backward if (button_down? Gosu::KbDown or button_down? Gosu::GpDown) and @player.can_move_backward?(@map)
+    @player.move_left if (button_down? Gosu::KbV or button_down? Gosu::GpButton8) and @player.can_move_left?(@map)
+    @player.move_right if (button_down? Gosu::KbB or button_down? Gosu::GpButton9) and @player.can_move_right?(@map)
+    @player.weapon = PowerOfCode.new(self) if button_down? Gosu::Kb1 or button_down? Gosu::GpButton5
+    @player.weapon = Pistol.new(self) if button_down? Gosu::Kb2 or button_down? Gosu::GpButton4
+
+    if (button_down? Gosu::KbC or button_down? Gosu::GpButton14) and @player.jumping == false
       @player.jumping = :up
       @player.crouching = false
     end
-    if button_down? Gosu::KbX and @player.jumping == false
+    if (button_down? Gosu::KbX or button_down? Gosu::GpButton12) and @player.jumping == false
       @player.crouching = :down if @player.crouching == false or @player.crouching == nil
       @player.crouching = :up if @player.crouching == true
     end
 
-    if button_down? Gosu::KbSpace
+    if button_down? Gosu::KbSpace or button_down? Gosu::GpButton13
       column, row = Map.matrixify(@player.x, @player.y)
       door = @map.get_door(row, column, @player.angle)
 
@@ -396,17 +396,17 @@ class GameWindow < Gosu::Window
   end
 
   def button_down(id)
-    if id == Gosu::KbEscape
+    if id == Gosu::KbEscape or id == Gosu::GpButton10
       @bg_song.stop if @bg_song
       close
     end
-    if id == Gosu::KbLeftShift
+    if id == Gosu::KbLeftShift or id == Gosu::GpButton11
       @player.running = true
     end
   end
 
   def button_up(id)
-    if id == Gosu::KbLeftShift
+    if id == Gosu::KbLeftShift or id == Gosu::GpButton11
       @player.running = false
     end
   end
