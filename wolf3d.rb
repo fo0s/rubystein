@@ -1,19 +1,18 @@
 #!/usr/bin/env ruby
-$: << File.dirname(__FILE__)
 require 'rubygems'
 require 'gosu'
 
-require 'config'
-require 'map'
-require 'sound'
-require 'weapon'
-require 'player'
-require 'ai_player'
-require 'sprite'
-require 'door'
-require 'image_pool'
+require './config'
+require './map'
+require './sound'
+require './weapon'
+require './player'
+require './ai_player'
+require './sprite'
+require './door'
+require './image_pool'
 
-require 'level'
+require './level'
 
 module ZOrder
   CEIL = 0

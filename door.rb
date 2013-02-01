@@ -1,4 +1,4 @@
-require 'map'
+require './map'
 
 class Door
   attr_accessor :pos

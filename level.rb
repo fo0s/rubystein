@@ -1,4 +1,4 @@
-require 'map'
+require './map'
 
 class Level0
 private

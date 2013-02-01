@@ -1,4 +1,4 @@
-require 'weapon'
+require './weapon'
 
 class Player
   include Damageable
