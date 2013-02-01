@@ -235,7 +235,6 @@ public
       add.player(Ronald, 42.0, 11.0)
       add.player(Ronald, 43.0, 12.0)
       zed = add.player(Zed, 35.5, 9.0)
-      zed.active = false
       
       add.player(Guard, 22.5, 11.0)
       add.player(Guard, 24.5, 12.0)
@@ -283,13 +282,7 @@ public
       add.item(Rails, 34.5, 18.5)
       add.item(PHP, 35.5, 18.5)
       add.item(Info, 33.5, 17.5, "Josh Peek: \"No, don't go in there! Inside is ZED SHAW!'\"")
-      add.item(InvisibleInfo, 34.5, 16.5, nil, "enter_zed.ogg")
-      add.item(InvisibleInfo, 34.5, 14.5) do |item, player|
-        window.present_boss("Zed Shaw", "rockzed_large.png")
-        map.items.delete(item)
-        zed.active = true
-      end
-      
+
       # Eastern room.
       add.item(Peepcode, 51.5, 34.5)
       add.item(Peepcode, 58.5, 30.5)

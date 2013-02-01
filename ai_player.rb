@@ -110,36 +110,33 @@ class AIPlayer
   attr_accessor :sight
   # This enemy must not be closer than the given number of blocks to the main character.
   attr_accessor :min_dinstance
-  # Whether the AI for this sprite is active.
-  attr_accessor :active
+  attr_accessor :target
 
   def initialize(sight = 10, min_distance = 2)
     @sight = sight
     @min_distance = min_distance
-    @active = true
   end
 
   def interact(player, drawn_sprite_x)
-    return if @health <= 0 || !@active
+    return if @health <= 0
 
     self.current_state = :idle if @current_state == :firing && @firing_left == 0
 
-    if @firing_left > 0
+    start = Coordinate.new(*Map.matrixify(@x, @y))
+    goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
+    los = line_of_sight(@map,start,goal)
+
+    if los and @firing_left > 0
       if (@current_anim_seq_id == 0)
         self.fire(player)
       end
       @firing_left -= 1
       return
     end
-
-    start = Coordinate.new(*Map.matrixify(@x, @y))
-    goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
-    if (line_of_sight(@map,start,goal) and rand > 0.8)
+    if los and rand > 0.8
       @firing_left = 1 + rand(5)
     end
 
-    start = Coordinate.new(*Map.matrixify(@x, @y))
-    goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
     if heuristic_estimate_of_distance(start, goal) > @min_distance
       path  = self.find_path(@map, start, goal)
       if path
