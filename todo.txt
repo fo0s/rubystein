@@ -2,8 +2,10 @@ TODO:
 set resolution and configure shit
 x strafing
 x running
-enemy AI
+x enemy AI
 map generation
-more weapons
+x more weapons
 projectile weapons
-
+slide along walls
+joystick controls on windows?
+secret walls?
