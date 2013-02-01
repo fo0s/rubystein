@@ -110,7 +110,7 @@ class AIPlayer
   attr_accessor :sight
   # This enemy must not be closer than the given number of blocks to the main character.
   attr_accessor :min_dinstance
-  attr_accessor :target
+  attr_accessor :last_seen
 
   def initialize(sight = 10, min_distance = 2)
     @sight = sight
@@ -125,6 +125,8 @@ class AIPlayer
     start = Coordinate.new(*Map.matrixify(@x, @y))
     goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
     los = line_of_sight(@map,start,goal)
+
+    @last_seen = goal if los
 
     if los and @firing_left > 0
       if (@current_anim_seq_id == 0)
@@ -141,6 +143,8 @@ class AIPlayer
       path  = self.find_path(@map, start, goal)
       if path
         self.step_to_adjacent_squarily(path.y, path.x)
+      else
+        self.step_to_adjacent_squarily(@last_seen.y, @last_seen.x) if @last_seen
       end
     end
   end
