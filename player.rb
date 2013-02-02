@@ -8,8 +8,7 @@ class Player
   HALF_FOV = FOV / 2
   DISTANCE_TO_PROJECTION = (RbConfig::WINDOW_WIDTH / 2) / Math.tan((FOV / 2) * Math::PI / 180)
   RAY_ANGLE_DELTA = (FOV / RbConfig::WINDOW_WIDTH)
-  
-  
+
   attr_accessor :x
   attr_accessor :y
   attr_accessor :height
@@ -23,7 +22,7 @@ class Player
   attr_accessor :crouching
   attr_accessor :jumping
   attr_accessor :weapon
-  
+
   def initialize(window)
     @x = 0.0
     @y = 0.0
@@ -63,7 +62,7 @@ class Player
     end
 
   end
-  
+
   def angle_in_radians
     @angle * Math::PI / 180
   end
@@ -71,13 +70,12 @@ class Player
   def angle_speed
     self.running ? ANGLE_SPEED * 1.5 : ANGLE_SPEED
   end
-  
+
   def turn_left
     @angle = (@angle + angle_speed) % 360
   end
-  
+
   def turn_right
-    # The added 360 here will make sure that @angle >= 0
     @angle = (@angle - angle_speed) % 360
   end
 
@@ -85,12 +83,12 @@ class Player
     return STEP_SIZE * 0.5 if self.crouching
     self.running ? STEP_SIZE * 1.5 : STEP_SIZE
   end
-  
+
   def dx
     # x = r cos(theta)
     step_size * Math.cos(self.angle_in_radians)
   end
-  
+
   def dy
     # y = r sin(theta)
     step_size * Math.sin(self.angle_in_radians)
@@ -103,11 +101,11 @@ class Player
   def dy_left
     step_size * Math.sin(self.angle_in_radians + Math::PI/2)
   end
-  
+
   def can_move_forward?(map)
     return !map.hit?(@x + 4*dx, @y - 4*dy)
   end
-  
+
   def can_move_backward?(map)
     return !map.hit?(@x - 4*dx, @y + 4*dy)
   end
@@ -119,17 +117,17 @@ class Player
   def can_move_right?(map)
     return !map.hit?(@x - 4*dx_left, @y + 4*dy_left)
   end
-  
+
   def move_forward
     @x += dx
     @y -= dy
   end
-  
+
   def move_backward
     @x -= dx
     @y += dy
   end
-  
+
   def move_left
     @x += dx_left
     @y -= dy_left
@@ -149,5 +147,4 @@ class Player
     @health -= 4 # TODO: @health -= player.weapon.damage
     @health = 0 if @health < 0
   end
-  
 end
