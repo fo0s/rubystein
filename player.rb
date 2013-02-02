@@ -102,28 +102,28 @@ class Player
     step_size * Math.sin(self.angle_in_radians + Math::PI/2)
   end
 
+  def move(dx, dy, map)
+    vert_hit = map.hit?(@x, @y + 4*dy)
+    hor_hit = map.hit?(@x + 4*dx, @y)
+    return if vert_hit and hor_hit and map.hit?(@x + 4*dx, @y + 4*dy)
+    @x += dx unless hor_hit
+    @y += dy unless vert_hit
+  end
+
   def move_forward(map)
-    return false if map.hit?(@x + 4*dx, @y - 4*dy)
-    @x += dx
-    @y -= dy
+    move(dx, -dy, map)
   end
 
   def move_backward(map)
-    return false if map.hit?(@x - 4*dx, @y + 4*dy)
-    @x -= dx
-    @y += dy
+    move(-dx, dy, map)
   end
 
   def move_left(map)
-    return false if map.hit?(@x + 4*dx_left, @y - 4*dy_left)
-    @x += dx_left
-    @y -= dy_left
+    move(dx_left, -dy_left, map)
   end
 
   def move_right(map)
-    return false if map.hit?(@x - 4*dx_left, @y + 4*dy_left)
-    @x -= dx_left
-    @y += dy_left
+    move(-dx_left, dy_left, map)
   end
 
   def health_percent

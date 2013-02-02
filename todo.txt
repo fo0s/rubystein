@@ -6,6 +6,7 @@ x enemy AI
 map generation
 x more weapons
 projectile weapons
-slide along walls
+x slide along walls
 joystick controls on windows?
 secret walls?
+diagonal movement when holding two buttons
