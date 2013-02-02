@@ -102,38 +102,26 @@ class Player
     step_size * Math.sin(self.angle_in_radians + Math::PI/2)
   end
 
-  def can_move_forward?(map)
-    return !map.hit?(@x + 4*dx, @y - 4*dy)
-  end
-
-  def can_move_backward?(map)
-    return !map.hit?(@x - 4*dx, @y + 4*dy)
-  end
-
-  def can_move_left?(map)
-    return !map.hit?(@x + 4*dx_left, @y - 4*dy_left)
-  end
-
-  def can_move_right?(map)
-    return !map.hit?(@x - 4*dx_left, @y + 4*dy_left)
-  end
-
-  def move_forward
+  def move_forward(map)
+    return false if map.hit?(@x + 4*dx, @y - 4*dy)
     @x += dx
     @y -= dy
   end
 
-  def move_backward
+  def move_backward(map)
+    return false if map.hit?(@x - 4*dx, @y + 4*dy)
     @x -= dx
     @y += dy
   end
 
-  def move_left
+  def move_left(map)
+    return false if map.hit?(@x + 4*dx_left, @y - 4*dy_left)
     @x += dx_left
     @y -= dy_left
   end
 
-  def move_right
+  def move_right(map)
+    return false if map.hit?(@x - 4*dx_left, @y + 4*dy_left)
     @x -= dx_left
     @y += dy_left
   end

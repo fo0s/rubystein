@@ -351,10 +351,10 @@ class GameWindow < Gosu::Window
   def process_movement_input
     @player.turn_left  if button_down? Gosu::KbLeft or button_down? Gosu::GpLeft
     @player.turn_right if button_down? Gosu::KbRight or button_down? Gosu::GpRight
-    @player.move_forward  if (button_down? Gosu::KbUp or button_down? Gosu::GpUp) and @player.can_move_forward?(@map)
-    @player.move_backward if (button_down? Gosu::KbDown or button_down? Gosu::GpDown) and @player.can_move_backward?(@map)
-    @player.move_left if (button_down? Gosu::KbV or button_down? Gosu::GpButton8) and @player.can_move_left?(@map)
-    @player.move_right if (button_down? Gosu::KbB or button_down? Gosu::GpButton9) and @player.can_move_right?(@map)
+    @player.move_forward(@map)  if button_down? Gosu::KbUp or button_down? Gosu::GpUp
+    @player.move_backward(@map) if button_down? Gosu::KbDown or button_down? Gosu::GpDown
+    @player.move_left(@map) if button_down? Gosu::KbV or button_down? Gosu::GpButton8
+    @player.move_right(@map) if button_down? Gosu::KbB or button_down? Gosu::GpButton9
     @player.weapon = PowerOfCode.new(self) if button_down? Gosu::Kb1 or button_down? Gosu::GpButton5
     @player.weapon = Pistol.new(self) if button_down? Gosu::Kb2 or button_down? Gosu::GpButton4
 
