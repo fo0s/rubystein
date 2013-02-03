@@ -144,7 +144,13 @@ class AIPlayer
       if path
         self.step_to_adjacent_squarily(path.y, path.x)
       else
-        self.step_to_adjacent_squarily(@last_seen.y, @last_seen.x) if @last_seen
+        if @last_seen
+          if line_of_sight(@map,start,@last_seen)
+            self.step_to_adjacent_squarily(@last_seen.y, @last_seen.x)
+          else
+            @last_seen = Coordinate.new((@last_seen.x + start.x)/2, (@last_seen.y + start.y)/2)
+          end
+        end
       end
     end
   end
@@ -275,7 +281,7 @@ class Enemy < AIPlayer
       on_death if respond_to?(:on_death, true)
     end
 
-    if not (( @current_state == :dead and @current_anim_seq_id + 1 == @slices[:dead].size ) or (@current_state == :idle))
+    unless ( @current_state == :dead and @current_anim_seq_id + 1 == @slices[:dead].size ) or (@current_state == :idle)
       if now >= @last_draw_time + @animation_interval
         @current_anim_seq_id += 1
         if @repeating_anim
