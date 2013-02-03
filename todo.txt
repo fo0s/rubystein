@@ -10,4 +10,4 @@ x slide along walls
 joystick controls on windows
 secret walls?
 diagonal movement when holding two buttons
-separate interact andn fire
+x separate interact and fire

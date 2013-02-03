@@ -352,14 +352,14 @@ class GameWindow < Gosu::Window
   end
 
   def process_movement_input
-    @player.turn_left  if button_down? Gosu::KbLeft or button_down? @controls::LEFT
-    @player.turn_right if button_down? Gosu::KbRight or button_down? @controls::RIGHT
-    @player.move_forward(@map)  if button_down? Gosu::KbUp or button_down? @controls::UP
-    @player.move_backward(@map) if button_down? Gosu::KbDown or button_down? @controls::DOWN
-    @player.move_left(@map) if button_down? Gosu::KbV or button_down? @controls::L
-    @player.move_right(@map) if button_down? Gosu::KbB or button_down? @controls::R
-    @player.weapon = PowerOfCode.new(self) if button_down? @controls::SELECT
-    @player.weapon = Pistol.new(self) if button_down? @controls::START
+    @player.turn_left  if button_down? Gosu::KbJ or button_down? @controls::LEFT
+    @player.turn_right if button_down? Gosu::KbL or button_down? @controls::RIGHT
+    @player.move_forward(@map)  if button_down? Gosu::KbI or button_down? @controls::UP
+    @player.move_backward(@map) if button_down? Gosu::KbK or button_down? @controls::DOWN
+    @player.move_left(@map) if button_down? Gosu::KbU or button_down? @controls::L
+    @player.move_right(@map) if button_down? Gosu::KbO or button_down? @controls::R
+    @player.weapon = PowerOfCode.new(self) if button_down? Gosu::Kb1 or button_down? @controls::SELECT
+    @player.weapon = Pistol.new(self) if button_down? Gosu::Kb2 or button_down? @controls::START
 
     #if (button_down? Gosu::KbC or button_down? Gosu::GpButton14) and @player.jumping == false
       #@player.jumping = :up
@@ -370,11 +370,11 @@ class GameWindow < Gosu::Window
       #@player.crouching = :up if @player.crouching == true
     #end
 
-    if button_down? Gosu::KbSpace or button_down? @controls::X
+    if button_down? Gosu::KbSpace or button_down? @controls::B
       column, row = Map.matrixify(@player.x, @player.y)
       door = @map.get_door(row, column, @player.angle)
 
-      if !door.nil?
+      unless door.nil?
         if door.open?
           @door_close_sound.play
           door.close!
@@ -384,7 +384,9 @@ class GameWindow < Gosu::Window
         end
         return
       end
+    end
 
+    if button_down? Gosu::KbD or button_down? @controls::X
       sprite_in_crosshair = @drawn_sprite_x[RbConfig::WINDOW_WIDTH/2]
 
       if sprite_in_crosshair && sprite_in_crosshair.respond_to?(:take_damage_from) && sprite_in_crosshair.respond_to?(:dead?) && !sprite_in_crosshair.dead?
@@ -402,13 +404,13 @@ class GameWindow < Gosu::Window
       @bg_song.stop if @bg_song
       close
     end
-    if id == Gosu::KbLeftShift or id == @controls::A
+    if id == Gosu::KbS or id == @controls::A
       @player.running = true
     end
   end
 
   def button_up(id)
-    if id == Gosu::KbLeftShift or id == @controls::A
+    if id == Gosu::KbS or id == @controls::A
       @player.running = false
     end
   end
