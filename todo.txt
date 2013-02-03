@@ -1,5 +1,5 @@
 TODO:
-set resolution and configure shit
+configuration screen
 x strafing
 x running
 x enemy AI
@@ -7,6 +7,7 @@ map generation
 x more weapons
 projectile weapons
 x slide along walls
-joystick controls on windows?
+joystick controls on windows
 secret walls?
 diagonal movement when holding two buttons
+separate interact andn fire
