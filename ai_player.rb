@@ -129,9 +129,7 @@ class AIPlayer
     @last_seen = goal if los
 
     if los and @firing_left > 0
-      if (@current_anim_seq_id == 0)
-        self.fire(player)
-      end
+      self.fire(player) if (@current_anim_seq_id == 0)
       @firing_left -= 1
       return
     end
