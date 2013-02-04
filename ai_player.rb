@@ -441,13 +441,13 @@ class Zed < Enemy
 end
 
 class Dog < MeleeEnemy
-  def initialize(window, map, x, y, death_sound = 'dog_cry.ogg', firing_sound = 'dog_bark.ogg', kill_score = 500, step_size = 7, animation_interval = 0.2)
+  def initialize(window, map, x, y, death_sound = 'enemies/dog/dog_cry.ogg', firing_sound = 'enemies/dog/dog_bark.ogg', kill_score = 500, step_size = 7, animation_interval = 0.2)
     sprites = {
-      :idle => ['dog_walking.png'],
-      :walking => ['dog_walking.png', 'dog_walking2.png', 'dog_walking3.png', 'dog_walking4.png'],
-      :firing  => ['dog_attacking.png', 'dog_attacking2.png', 'dog_attacking3.png'],
-      :damaged => ['dog_dead.png', 'dog_dead2.png'],
-      :dead    => ['dog_dead.png', 'dog_dead2.png', 'dog_dead3.png', 'dog_dead4.png']
+      :idle    => ["enemies/#{clean_name}/walking1.png"],
+      :walking => (1..4).map{|n| "enemies/#{clean_name}/walking#{n}.png"},
+      :firing  => (1..3).map{|n| "enemies/#{clean_name}/firing#{n}.png"},
+      :damaged => (1..2).map{|n| "enemies/#{clean_name}/dead#{n}.png"},
+      :dead    => (1..4).map{|n| "enemies/#{clean_name}/dead#{n}.png"},
     }
 
     @name = "Mongrel"
