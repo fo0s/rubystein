@@ -3,7 +3,7 @@ require 'rubygems'
 require 'gosu'
 
 require './config'
-require './controls'
+require './gamepad'
 require './map'
 require './sound'
 require './weapon'
@@ -56,9 +56,8 @@ class GameWindow < Gosu::Window
     super(RbConfig::WINDOW_WIDTH, RbConfig::WINDOW_HEIGHT, RbConfig::FULLSCREEN, 1000.0 / RbConfig::FPS)
     self.caption = 'Rubystein 3d by Phusion CS Company'
 
-    os_name = RbConfig::CONFIG['host_os']
-    @controls = Controls::Mac
-    @controls = Controls::Win if os_name =~ /mswin|win|mingw/
+    @controls = Gamepad::Win
+    @controls = Gamepad::Mac if RbConfig::CONFIG['host_os'] =~ /mac|darwin/
 
     @map = MapPool.get(self, 0)
 

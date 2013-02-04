@@ -1,4 +1,4 @@
-module Controls
+module Gamepad
   module Mac
     UP = Gosu::GpButton0
     DOWN = Gosu::GpButton1
