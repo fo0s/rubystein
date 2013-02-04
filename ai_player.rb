@@ -367,14 +367,14 @@ end
 class Guard < Enemy
   def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 100, step_size = 3, animation_interval = 0.2)
     sprites = {
-      :idle    => ["#{clean_name}_idle.png"],
-      :walking => (1..4).map{|n| "#{clean_name}_walking#{n}.png"},
-      :firing  => (1..2).map{|n| "#{clean_name}_firing#{n}.png"},
-      :damaged => (1..2).map{|n| "#{clean_name}_damaged#{n}.png"},
-      :dead    => (1..5).map{|n| "#{clean_name}_dead#{n}.png"},
+      :idle    => ["enemies/#{clean_name}/idle.png"],
+      :walking => (1..4).map{|n| "enemies/#{clean_name}/walking#{n}.png"},
+      :firing  => (1..2).map{|n| "enemies/#{clean_name}/firing#{n}.png"},
+      :damaged => (1..2).map{|n| "enemies/#{clean_name}/damaged#{n}.png"},
+      :dead    => (1..5).map{|n| "enemies/#{clean_name}/dead#{n}.png"},
     }
 
-    sounds  = ['long live php.ogg', 'myphplife.ogg', 'my damn php life.ogg', 'phpforever.ogg']
+    sounds  = ['long live php.ogg', 'myphplife.ogg', 'my damn php life.ogg', 'phpforever.ogg'].map{|n| "enemies/#{clean_name}/#{n}"}
     firing_sound ||= sounds[rand(sounds.size - 1)]
     death_sound  ||= sounds[rand(sounds.size - 1)]
 
