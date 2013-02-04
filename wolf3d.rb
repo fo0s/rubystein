@@ -56,7 +56,9 @@ class GameWindow < Gosu::Window
     super(RbConfig::WINDOW_WIDTH, RbConfig::WINDOW_HEIGHT, RbConfig::FULLSCREEN, 1000.0 / RbConfig::FPS)
     self.caption = 'Rubystein 3d by Phusion CS Company'
 
-    @controls = Controls::Mac # TODO: make this dynamic
+    os_name = RbConfig::CONFIG['host_os']
+    @controls = Controls::Mac
+    @controls = Controls::Win if os_name =~ /mswin|win|mingw/
 
     @map = MapPool.get(self, 0)
 
