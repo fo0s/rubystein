@@ -198,13 +198,16 @@ public
       add.prop(Lamp, 19.5, 17.5)
     end
     
+    map.add do |add|
+      add.missle(Rocket, 37.5, 57.5)
+    end
+
     ####### Players #######
     
     zed = nil
     map.add do |add|
       # Southern (starting) room.
       add.player(Guard, 40.5, 61.5)
-      add.player(Dog, 37.5, 57.5)
       
       # Room of horizontal scaling.
       add.player(Dog, 37.5, 52.5)

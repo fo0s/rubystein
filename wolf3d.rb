@@ -12,6 +12,7 @@ require './ai_player'
 require './sprite'
 require './door'
 require './image_pool'
+require './missle'
 
 require './level'
 
@@ -51,6 +52,8 @@ class GameWindow < Gosu::Window
   LEFT = 0
   RIGHT = RbConfig::WINDOW_WIDTH - 1
   BOTTOM = RbConfig::WINDOW_HEIGHT - 1
+
+  attr_accessor :player
 
   def initialize
     super(RbConfig::WINDOW_WIDTH, RbConfig::WINDOW_HEIGHT, RbConfig::FULLSCREEN, 1000.0 / RbConfig::FPS)

@@ -16,6 +16,7 @@ class Map
   attr_accessor :props
   attr_accessor :players
   attr_accessor :items
+  attr_accessor :missles
   #attr_accessor :sprites
   attr_accessor :doors
   attr_reader   :width
@@ -46,6 +47,12 @@ class Map
       player = klass.new(@map.window, @map, x * GRID_WIDTH_HEIGHT, y * GRID_WIDTH_HEIGHT, *args, &block)
       @map.players << player
       player
+    end
+
+    def missle(klass, x, y, *args, &block)
+      missle = klass.new(@map.window, @map, x * GRID_WIDTH_HEIGHT, y * GRID_WIDTH_HEIGHT, *args, &block)
+      @map.missles << missle
+      missle
     end
   end
 
@@ -93,6 +100,7 @@ class Map
     @items   = []
     @players = []
     @props   = []
+    @missles = []
   end
 
   def add
@@ -100,7 +108,7 @@ class Map
   end
 
   def sprites
-    @items + @players + @props
+    @items + @players + @props + @missles
   end
 
   def find_nearest_intersection(start_x, start_y, angle)
