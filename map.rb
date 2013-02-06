@@ -108,7 +108,7 @@ class Map
   end
 
   def sprites
-    @items + @players + @props + @missles
+    @items + @players + @props + @missles #it could be interesting to spawn the map with some missles floating around...
   end
 
   def find_nearest_intersection(start_x, start_y, angle)

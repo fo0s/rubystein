@@ -17,7 +17,6 @@ class Missle
     @y = y
     @angle = 0
     @slices = (1..8).map{|n| SpritePool::get(window, "missles/rocket#{n}.png", TEX_HEIGHT)}
-    #@slices = SpritePool::get(window, "missles/#{clean_name}#{1}.png", TEX_HEIGHT)
     @last_draw_time = Time.now.to_f
   end
 
