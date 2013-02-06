@@ -112,9 +112,9 @@ class AIPlayer
   attr_accessor :min_dinstance
   attr_accessor :last_seen
 
-  def initialize(sight = 10, min_distance = 2)
-    @sight = sight
-    @min_distance = min_distance
+  def initialize
+    @sight = 10
+    @min_distance = 2
   end
 
   def interact(player, drawn_sprite_x)
