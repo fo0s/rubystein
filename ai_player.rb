@@ -118,7 +118,7 @@ class AIPlayer
   end
 
   def interact(player)
-    return if @health <= 0
+    return if @health <= 0 or @current_status == :dead
 
     self.current_state = :idle if @current_state == :firing && @firing_left == 0
 
@@ -126,16 +126,8 @@ class AIPlayer
     goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
     los = line_of_sight(@map,start,goal)
 
-    @last_seen = goal if los
-
-    if los and @firing_left > 0
-      self.fire(player) if (@current_anim_seq_id == 0)
-      @firing_left -= 1
-      return
-    end
-    if los and rand > 0.8
-      @firing_left = 1 + rand(5)
-    end
+    melee = @melee_attack_damage ? melee_attack(player, start, goal) : nil
+    ranged_attack(player, start, goal) if @ranged_attack_damage and !melee
 
     if heuristic_estimate_of_distance(start, goal) > @min_distance
       path  = self.find_path(@map, start, goal)
@@ -151,6 +143,37 @@ class AIPlayer
         end
       end
     end
+  end
+
+  def ranged_attack(player, start, goal)
+    los = line_of_sight(@map,start,goal)
+
+    @last_seen = goal if los
+
+    if los and @firing_left > 0
+      self.fire(player, @ranged_attack_damage) if (@current_anim_seq_id == 0)
+      @firing_left -= 1
+      return true
+    end
+    if los and rand > 0.8
+      @firing_left = 1 + rand(5)
+    end
+    false
+  end
+
+  def melee_attack(player, start, goal)
+    if @firing_left > 0
+      if (@current_anim_seq_id == 0)
+        self.fire(player, @melee_attack_damage)
+        @firing_left -= 1
+        return true
+      end
+    end
+    h = heuristic_estimate_of_distance(start, goal)
+    if h <= @min_distance and line_of_sight(@map,start,goal) and rand > 0.5
+      @firing_left = 1 + rand(5)
+    end
+    false
   end
 end
 
@@ -173,8 +196,6 @@ class Enemy < AIPlayer
     @firing_sounds = load_sounds(firing_sound)
     @death_sounds  = load_sounds(death_sound)
     @name       ||= self.class.to_s
-    #@firing_text  = "#{@name}: \"#{SOUND_TO_TEXT[firing_sound]}\"" if SOUND_TO_TEXT.has_key?(firing_sound)
-    #@death_text   = "#{@name}: \"#{SOUND_TO_TEXT[death_sound]}\"" if SOUND_TO_TEXT.has_key?(death_sound)
 
     kind_tex_paths.each { |kind, tex_paths|
       @slices[kind] = []
@@ -231,9 +252,7 @@ class Enemy < AIPlayer
     x *= Map::GRID_WIDTH_HEIGHT
     y *= Map::GRID_WIDTH_HEIGHT
 
-    #puts "#{Time.now} -- (#{x}, #{y})"
     self.step_to(x, y)
-
   end
 
   def step_to(x, y)
@@ -297,18 +316,13 @@ class Enemy < AIPlayer
     return @slices[@current_state][@current_anim_seq_id]
   end
 
-  def fire(player)
+  def fire(player, damage)
     return if @current_status == :dead
-    dx = player.x - @x
-    dy = player.y - @y
-    r_2 = dx * dx + dy * dy
-    f_2 = FIRING_SOUND_BLOCKS * FIRING_SOUND_BLOCKS * Map::GRID_WIDTH_HEIGHT * Map::GRID_WIDTH_HEIGHT
-    r_2 = f_2 if r_2 < f_2
 
     if @firing_sound_sample.nil? || !@firing_sound_sample.playing?
       @firing_sound_sample = play_random_sound(@firing_sounds)
     end
-    player.take_damage_from(self)
+    player.take_damage_from(self, damage)
 
     self.current_state = :firing
   end
@@ -334,36 +348,6 @@ class Enemy < AIPlayer
   end
 end
 
-class MeleeEnemy < Enemy
-  def interact(player)
-    return if @health <= 0
-
-    self.current_state = :idle if @current_state == :firing && @firing_left == 0
-
-    if @firing_left > 0
-      if (@current_anim_seq_id == 0)
-        self.fire(player)
-      end
-      @firing_left -= 1
-      return
-    end
-
-    start = Coordinate.new(*Map.matrixify(@x, @y))
-    goal  = Coordinate.new(*Map.matrixify(player.x, player.y))
-
-    h = heuristic_estimate_of_distance(start, goal)
-
-    if h > @min_distance
-      path  = self.find_path(@map, start, goal)
-      if path
-        self.step_to_adjacent_squarily(path.y, path.x)
-      end
-    elsif h == @min_distance and line_of_sight(@map,start,goal) and rand > 0.5
-      @firing_left = 1 + rand(5)
-    end
-  end
-end
-
 class Guard < Enemy
   def initialize(window, map, x, y, death_sound = nil, firing_sound = nil, kill_score = 100, step_size = 3, animation_interval = 0.2)
     sprites = {
@@ -380,6 +364,7 @@ class Guard < Enemy
 
     super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
     @health = 50
+    @ranged_attack_damage = 3
   end
 end
 
@@ -396,6 +381,7 @@ class Hans < Enemy
     # Special thanks goes out to Julian Raschke (jlnr on #gosu@irc.freenode.net ) of libgosu.org for recording these samples for us.
     death_sounds  = ['mein_spagetthicode.ogg', 'meine_magischen_qpc.ogg', 'meine_sql.ogg', 'meine_sql.ogg']
     death_sound ||= death_sounds[rand(death_sounds.size - 1)]
+    @ranged_attack_damage = 5
 
     super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
   end
@@ -440,7 +426,7 @@ class Zed < Enemy
   end
 end
 
-class Dog < MeleeEnemy
+class Dog < Enemy
   def initialize(window, map, x, y, death_sound = 'enemies/dog/dog_cry.ogg', firing_sound = 'enemies/dog/dog_bark.ogg', kill_score = 500, step_size = 7, animation_interval = 0.2)
     sprites = {
       :idle    => ["enemies/#{clean_name}/walking1.png"],
@@ -453,6 +439,7 @@ class Dog < MeleeEnemy
     @name = "Mongrel"
     super(window, sprites, map, x, y, death_sound, firing_sound, kill_score, step_size, animation_interval)
     @health = 100
+    @melee_attack_damage = 4
     @min_distance = 1
   end
 end

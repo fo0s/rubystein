@@ -130,9 +130,9 @@ class Player
     @health * 100.0 / @max_health
   end
 
-  def take_damage_from(player)
+  def take_damage_from(player, damage)
     return if @health <= 0
-    @health -= 4 # TODO: @health -= player.weapon.damage
+    @health -= damage
     @health = 0 if @health < 0
   end
 end
