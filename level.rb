@@ -171,7 +171,6 @@ public
       add.prop(BrownBarrel, 60.5, 29.5)
       add.prop(BrownBarrel, 59.5, 29.5)
       
-      add.prop(ColonelSanders, 56.5, 44.5)
       add.prop(TableWithChairs, 55.5, 45.5)
       add.prop(TableWithChairs, 55.5, 43.5)
       add.prop(Lamp, 54.5, 44.5)

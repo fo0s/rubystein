@@ -187,18 +187,6 @@ class Vase
   end
 end
 
-class ColonelSanders
-  include Sprite
-
-  def initialize(window, x, y)
-    @window = window
-    @x = x
-    @y = y
-    @slices = SpritePool::get(window, 'colonel_sanders.bmp', TEX_HEIGHT)
-  end
-end
-
-
 # An sprite that interacts with the player when they touch each other.
 class Interactable
   include Sprite
