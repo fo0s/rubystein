@@ -307,7 +307,7 @@ class GameWindow < Gosu::Window
         square_distance_to_main_character = dx * dx + dy * dy
 
         if square_distance_to_main_character < (ai_player.sight * Map::GRID_WIDTH_HEIGHT) ** 2
-          ai_player.interact(@player, @drawn_sprite_x)
+          ai_player.interact(@player)
           real_index_of_last_invoked_ai_player = real_index
           num_invoked += 1
         end

@@ -117,7 +117,7 @@ class AIPlayer
     @min_distance = 2
   end
 
-  def interact(player, drawn_sprite_x)
+  def interact(player)
     return if @health <= 0
 
     self.current_state = :idle if @current_state == :firing && @firing_left == 0
@@ -335,7 +335,7 @@ class Enemy < AIPlayer
 end
 
 class MeleeEnemy < Enemy
-  def interact(player, drawn_sprite_x)
+  def interact(player)
     return if @health <= 0
 
     self.current_state = :idle if @current_state == :firing && @firing_left == 0
