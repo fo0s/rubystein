@@ -17,8 +17,8 @@ class Missle
     @x = x
     @y = y
     @angle = 0
-    @slices = (1..8).map{|n| SpritePool::get(window, "missles/rocket#{n}.png", TEX_HEIGHT)}
-    @dead_slices = (1..6).map{|n| SpritePool::get(window, "missles/explosion#{n}.png", TEX_HEIGHT)}
+    @slices = (1..8).map{|n| SpritePool::get(window, "missles/#{clean_name}/#{n}.png", TEX_HEIGHT)}
+    @dead_slices = (1..6).map{|n| SpritePool::get(window, "missles/#{clean_name}/death#{n}.png", TEX_HEIGHT)}
     @last_draw_time = Time.now.to_f
     @dead = false
   end
