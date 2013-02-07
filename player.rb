@@ -2,6 +2,7 @@ require './weapon'
 
 class Player
   include Damageable
+  include Directable
   STEP_SIZE = 12
   ANGLE_SPEED = 6
   FOV = 60.0 # Field of View
@@ -63,10 +64,6 @@ class Player
 
   end
 
-  def angle_in_radians
-    @angle * Math::PI / 180
-  end
-
   def angle_speed
     self.running ? ANGLE_SPEED * 1.5 : ANGLE_SPEED
   end
@@ -82,32 +79,6 @@ class Player
   def step_size
     return STEP_SIZE * 0.5 if self.crouching
     self.running ? STEP_SIZE * 1.5 : STEP_SIZE
-  end
-
-  def dx
-    # x = r cos(theta)
-    step_size * Math.cos(self.angle_in_radians)
-  end
-
-  def dy
-    # y = r sin(theta)
-    step_size * Math.sin(self.angle_in_radians)
-  end
-
-  def dx_left
-    step_size * Math.cos(self.angle_in_radians + Math::PI/2)
-  end
-
-  def dy_left
-    step_size * Math.sin(self.angle_in_radians + Math::PI/2)
-  end
-
-  def move(dx, dy, map)
-    vert_hit = map.hit?(@x, @y + 4*dy)
-    hor_hit = map.hit?(@x + 4*dx, @y)
-    return if vert_hit and hor_hit and map.hit?(@x + 4*dx, @y + 4*dy)
-    @x += dx unless hor_hit
-    @y += dy unless vert_hit
   end
 
   def move_forward(map)
