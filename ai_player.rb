@@ -163,7 +163,7 @@ class AIPlayer
 
   def melee_attack(player, start, goal)
     if @firing_left > 0
-      if (@current_anim_seq_id == 0)
+      if (rand(4) == 0)
         self.fire(player, @melee_attack_damage)
         @firing_left -= 1
         return true
