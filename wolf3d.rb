@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'rubygems'
 require 'gosu'
+require 'rbconfig'
 
 require './config'
 require './mixins'
